@@ -15,6 +15,6 @@ import("//build/lite/config/component/lite_component.gni")
 
 lite_component("app") {
     features = [
-         "//vendor/cimoco/fs_hi3861/demo:demo",
+         "//vendor/hqyj/fs_hi3861/demo:demo",
     ]
 }

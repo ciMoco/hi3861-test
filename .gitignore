@@ -1,3 +1,4 @@
 .deveco/**
 .vscode/**
+./src/out/**
 
