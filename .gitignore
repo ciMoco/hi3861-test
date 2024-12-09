@@ -1,4 +1,6 @@
 .deveco/**
 .vscode/**
 ./src/out/**
-
+./src/device/hisilicon/hispark_pegasus/sdk_liteos/output/**
+./src/device/hisilicon/hispark_pegasus/sdk_liteos/build/build_tmp/cache/**
+./src/device/hisilicon/hispark_pegasus/sdk_liteos/build/build_tmp/logs/**

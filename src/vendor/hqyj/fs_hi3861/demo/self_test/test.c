@@ -26,11 +26,10 @@
 #include "lwip/sockets.h"
 #include "lwip/api_shell.h"
 #include "sockets.h"
-#include "cJSON.h"
 
-#define SSID "hqyj" // wifi名
-#define PSK "ynjabo77" // wifi密码
-#define IP "192.168.100.200" // 本机ip
+#define SSID "HQYJ_OFFICE" // wifi名
+#define PSK "HqyjOffice2021*#&!" // wifi密码
+#define IP "192.168.101.82" // 本机ip
 #define PORT 8898
 #define TASK_STACK_SIZE (1024  * 5)
 #define KEY HI_IO_NAME_GPIO_14
@@ -39,14 +38,28 @@ typedef struct {
     int cmd;
     float temp;
     float humi;
+    float temp_up;   // 温度上限
+    float temp_down; // 温度下限
+    float humi_up;   // 湿度上限
+    float humi_down; // 湿度下限
     int devctrl;
     uint16_t als;
     uint16_t ps;
     uint16_t ir;
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
     char flag;
     char username[20];
     char password[20];
 } msg_t;
+
+typedef struct {
+    float temp_up;   // 温度上限
+    float temp_down; // 温度下限
+    float humi_up;   // 湿度上限
+    float humi_down; // 湿度下限
+} threshold_t;
 
 osThreadId_t server_task_id = 0; // tcp服务器的任务id
 osThreadId_t local_task_id = 0; // 本地任务id
@@ -59,12 +72,18 @@ int n = 0; // 下标
 void (*p[2])(void);
 msg_t msg;
 
+threshold_t recv_threshold = {
+    .temp_up = 50,
+    .temp_down = 0,
+    .humi_up = 50,
+    .humi_down = 0,
+};
+
 uint32_t TEMP[20] = {0};
 uint32_t HUMI[20] = {0};
 uint8_t IR[20] = {0};
 uint8_t ALS[20] = {0};
 uint8_t PS[20] = {0};
-
 
 // 创建任务线程
 void *task_init(osThreadAttr_t *taskclass, const char *taskname, osThreadFunc_t taskfunc, uint8_t taskpriority) {
@@ -120,14 +139,13 @@ void show_temp_humi(void) {
     SSD1306_ShowStr(25, 2, HUMI, 16);
 }
 
-
 // 服务器通信任务线程
 void server_task(void) {
     int sfd;
-    int flag_led = 0, flag_buzzer = 0, flag_fan = 0;
+    int led_flag = 0, buzzer_flag = 0, fan_flag = 0;
     struct sockaddr_in serveraddr;
     socklen_t serveraddr_len = sizeof(serveraddr);
-    char name[20] = "admin";
+    char name[20] = "niuma";
     char passwd[20] = "12345678";
     
     WiFi_connectHotspots(SSID, PSK);
@@ -163,39 +181,56 @@ void server_task(void) {
             
             switch(msg.cmd) {
             case 1: // 设置阈值
-                // if(msg.)
+                printf("set threshold...\n");
+                recv_threshold.temp_up = msg.temp_up;
+                recv_threshold.humi_up = msg.humi_up;
+                recv_threshold.temp_down= msg.temp_down;
+                recv_threshold.humi_down = msg.humi_down ;
+                msg.flag = 1;
+                send(sfd, &msg, sizeof(msg_t), 0);
+                printf("temp_up:%.2f, humi_up:%.2f temp_down:%.2f humi_down:%.2f\n", recv_threshold.temp_up, recv_threshold.humi_up, recv_threshold.temp_down, recv_threshold.humi_down);
+                printf("threshold update success!!!\n");
                 break;
             case 2: // 获取环境数据
                 SHT20_ReadData(&msg.temp, &msg.humi);
                 AP3216C_ReadData(&msg.ir, &msg.als, &msg.ps);
-                msg.flag == 1;
+                msg.flag = 1;
                 send(sfd, &msg, sizeof(msg_t), 0);
-                printf("send end_data success!\n");
+                printf("send env_data success!\n");
+                printf("temp:%.2f, humi:%.2f ir:%d als:%d ps:%d\n", msg.temp, msg.humi, msg.ir, msg.als, msg.ps);
                 break;
             case 3: // 控制设备
                 printf("dev ctrl\n");
                 if(msg.devctrl == 0x01) {
-                    flag_led =!flag_led;
                     printf("ctrl led...\n");
-                    set_led(flag_led);
+                    led_flag = !led_flag;
+                    set_led(led_flag);
                 } else if(msg.devctrl == 0x02) {
-                    flag_buzzer = !flag_buzzer;
                     printf("ctrl buzzer...\n");
-                    set_buzzer(flag_buzzer);
+                    buzzer_flag = !buzzer_flag;
+                    set_buzzer(buzzer_flag);
                 } else if(msg.devctrl == 0x03) {
-                    flag_fan = !flag_fan;
                     printf("ctrl fan...\n");
-                    set_fan(flag_fan);
-                } else {
+                    fan_flag = !fan_flag;
+                    set_fan(fan_flag);
+                } else if(msg.devctrl == 0x04) {
                     set_led(false);
                     set_buzzer(false);
                     set_fan(false);
+                } else {
+                    printf("cmd error!!!\n");
+                    msg.flag = 0;
+                    send(sfd, &msg, sizeof(msg_t), 0);
+                    break;
                 }
-                msg.flag == 1;
+                msg.flag = 1;
                 send(sfd, &msg, sizeof(msg_t), 0);
                 break;
             case 4: // 结束通信
-                break;
+                printf("exit...\n");
+                close(sfd);
+                osThreadTerminate(server_task_id);
+                return;
             case 255:
                 printf("Heartbeat packet arrives...\n");
                 msg.flag = 1;
@@ -224,6 +259,13 @@ void local_task(void) {
             flag = 0;
         }
         p[n]();
+        if(msg.temp > recv_threshold.temp_up) {
+            AW2013_Control_RGB(255,0,0);
+        } else if(msg.temp < recv_threshold.temp_down) {
+            AW2013_Control_RGB(0,0,255);
+        } else {
+            AW2013_Control_RGB(0,255,0);
+        }
         usleep(500 * 1000); // 100ms
     }
 }
@@ -231,14 +273,15 @@ void local_task(void) {
 static void base_test(void) {
     printf("bast_test is ok！！！\n");
 
-    // 外设初始化    
     PCF8574_Init(); // led 蜂鸣器 风扇
     SHT20_Init(); // 温湿度传感器
+    AW2013_Init(); // RGB
     AP3216C_Init(); // 三合一
     SSD1306_Init(); // OLED
     
     p[0] = show_temp_humi;
     p[1] = show_ir_als_ps;
+    
     // 定义任务线程结构体
     osThreadAttr_t options;
                               

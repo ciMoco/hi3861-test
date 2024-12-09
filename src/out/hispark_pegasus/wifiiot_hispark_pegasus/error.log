@@ -1,0 +1,62 @@
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/app/demo/app.json' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/app/demo/app.json'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/boot/flashboot/Makefile' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/boot/flashboot/Makefile'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/boot/flashboot/SConscript' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/boot/flashboot/SConscript'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/boot/loaderboot/SConscript' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/boot/loaderboot/SConscript'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/build/make_scripts/config.mk' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/make_scripts/config.mk'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/build/scripts/scons_env_cfg.py' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/scripts/scons_env_cfg.py'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/build/scripts/scons_utils.py' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/scripts/scons_utils.py'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/build_patch.sh' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build_patch.sh'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/SConstruct' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/SConstruct'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/tools/lzma_tool/lzma_tool.exe' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/tools/lzma_tool/lzma_tool.exe'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/tools/nvtool/build_nv.py' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/tools/nvtool/build_nv.py'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/tools/nvtool/tools/nv/cdbm.exe' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/tools/nvtool/tools/nv/cdbm.exe'
+'/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/build/win_scripts/tools/sign_tool/sign_tool.exe' -> '/d/hi3861_ok/src/device/hisilicon/hispark_pegasus/sdk_liteos/tools/sign_tool/sign_tool.exe'
+execute ota_builder with python...
+riscv32-unknown-elf-gcc -Iplatform\os\Huawei_LiteOS\kernel\include -Iconfig -DCONFIG_TEE_HUKS_SUPPORT -DCONFIG_CHIP_PKT_32K -DHI_BOARD_ASIC -DHI_ON_FLASH -E build\link\system_config.ld.S -o build\build_tmp\scripts\system_config.ld -P
+nvimg_builder(["build\build_tmp\scripts\system_config.ld"], ["build\link\system_config.ld.S"])
+product_name_list: ['sta']
+xml h file: D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\h_file\nv
+D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\out_nv_bin\sta
+app_subver_list: ['demo']
+current subver_name:demo
+root_dir: D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool
+mdm_xml: D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\xml_file\mss_nvi_db.xml
+HNV NAME:mss_nvi_db.xml
+nv_tool: D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\tools\nv\cdbm.exe
+app_subver_temp_dir:D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\out_nv_bin\sta\nv\Hi3861_wifiiot_app\outside_demo
+make app_subver_temp_dir
+mdmxml:D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\xml_file\mss_nvi_db.xml
+src_xml_list: ['D:\\hi3861_ok\\src\\device\\hisilicon\\hispark_pegasus\\sdk_liteos\\tools\\nvtool\\xml_file\\mss_nvi_db.xml']
+combin_xml:D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\out_nv_bin\sta\nv\Hi3861_wifiiot_app\mss_nvi_db.xml
+root_list [<Element 'HISTUDIO' at 0x00000000041C07C0>]
+hi_nv_modify_by_cfg
+cfg_file: nv
+
+cmd_line= ('D:\\hi3861_ok\\src\\device\\hisilicon\\hispark_pegasus\\sdk_liteos\\tools\\nvtool\\tools\\nv\\cdbm.exe', 'D:\\hi3861_ok\\src\\device\\hisilicon\\hispark_pegasus\\sdk_liteos\\tools\\nvtool\\out_nv_bin\\sta\\nv\\Hi3861_wifiiot_app\\outside_demo\\nv.xml', 'D:\\hi3861_ok\\src\\device\\hisilicon\\hispark_pegasus\\sdk_liteos\\tools\\nvtool\\h_file\\nv', 'D:\\hi3861_ok\\src\\device\\hisilicon\\hispark_pegasus\\sdk_liteos\\tools\\nvtool\\out_nv_bin\\sta\\nv\\Hi3861_wifiiot_app\\outside_demo\\nv')
+D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\out_nv_bin\sta\nv\Hi3861_wifiiot_app\outside_demo\nv.xml
+D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\h_file\nv
+D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\out_nv_bin\sta\nv\Hi3861_wifiiot_app\outside_demo\nv
+===========Init HDB Start===========
+*********strDataTypeDefPath:D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\h_file\nv/../nv/nv_modem_struct_def.txt
+*********strDataTypeDefPath:D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\h_file\nv/../nv/nv_modem_struct_def.txt
+*********strDataTypeDefPath:D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\h_file\nv/../nv/nv_factory_struct_def.txt
+===========Init HDB finish===========
+===========Write NV Buffer To File===========
+===========Write NV Buffer Finish===========
+RETURN VALUE:0
+dst_hnv= D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\out_nv_bin\sta\nv\hnv\Hi3861_wifiiot_app.hnv
+Factory NV total num:10
+NV_FILE_STRU :28
+Factory NV total size:824
+Normal NV total num:13
+NV_FILE_STRU :28
+Normal NV total size:766
+build hnv OK:D:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\tools\nvtool\out_nv_bin\sta\nv\hnv\Hi3861_wifiiot_app.hnv
+ENDING
+riscv32-unknown-elf-gcc -Iplatform\os\Huawei_LiteOS\kernel\include -Iconfig -DCONFIG_TEE_HUKS_SUPPORT -DCONFIG_CHIP_PKT_32K -DHI_BOARD_ASIC -DHI_ON_FLASH -DFLASH_FIRM_START=4248512 -E build\link\link.ld.S -o build\build_tmp\scripts\link.lds -P
+riscv32-unknown-elf-ld -nostartfiles -nostdlib -static --gc-sections -LD:\DevTools_Hi3861V100_v1.0\hcc_riscv32_win\bin\..\lib\gcc\riscv32-unknown-elf\7.3.0 -LD:\hi3861_ok\src\device\hisilicon\hispark_pegasus\sdk_liteos\build\scripts\..\..\..\..\..\huawei\hms\hilink\ohos\l0\hi3861\lib\wifi -Lbuild\build_tmp\libs\app\wifiiot_app -Lbuild\build_tmp\libs\components\at -Lbuild\build_tmp\libs\platform\drivers -Lbuild\build_tmp\libs\platform\system -Lbuild\build_tmp\scripts -Lbuild\libs -Lbuild\libs\hi3861\release\no_mesh -Lbuild\scripts -Lohos\libs -Tbuild\build_tmp\scripts\link.lds -Map=output\bin\Hi3861_wifiiot_app.map -o output\bin\Hi3861_wifiiot_app.out --start-group -ladc -lat -lc_flash -lcfg -lcoap -lcpup -ldiag -ldrv -lflash -lgcc -lgpio -lhistreaminglink -li2c -lio -liperf -llitekernel_flash -lltoswpa -llwip -lm_flash -lmbedtls -lmqtt -lparttab -lpwm -lres_cfg -lsdio -lsec_flash -lspiffs -lsystem -ltsensor -luart -lupg -lwifi -lwifi_flash -lwifiiot_app -lwpa --whole-archive -lauthmanager -lbootstrap -lbroadcast -lcjson_static -lcmsis -ldeviceauth -ldeviceauth_hal_liteos -ldiscovery -ldump_static -lhal_file_static -lhal_iothardware -lhal_sysparam -lhal_token_static -lhal_update_static -lhal_wifiaware -lhichainsdk -lhilog_lite -lhiview_lite -lhota -lhuks_3.0_sdk -lnative_file -lposix -lsamgr -lsamgr_adapter -lsamgr_source -lsysparam -ltest -ltoken_static -ltrans_service -lutils_kv_store -lwifiaware -lwifiservice --no-whole-archive --end-group
+riscv32-unknown-elf-ld: ohos\libs\libtest.a(libtest.test.o): in function `.L28':
+test.c:(.text.server_task+0x37a): undefined reference to `cloas'
+scons: *** [output\bin\Hi3861_wifiiot_app.out] Error 1
+[91mBUILD FAILED!!!![0m
+[91mFailed building output\bin\Hi3861_wifiiot_app.out: Error 1[0m
